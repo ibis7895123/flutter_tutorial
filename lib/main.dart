@@ -3,69 +3,44 @@ import 'package:flutter/material.dart';
 void main() {
   // runApp(const MyApp());
   runApp(const MaterialApp(
-    title: 'My App',
-    home: SafeArea(child: MyScaffold()),
+    title: 'Flutter Tutorial',
+    home: TutorialHome(),
   ));
 }
 
-class MyScaffold extends StatelessWidget {
-  const MyScaffold({Key? key}) : super(key: key);
+class TutorialHome extends StatelessWidget {
+  const TutorialHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // マテリアルは、UIが表示される概念的な紙である
-    return Material(
-        child: Column(
-      children: [
-        MyAppBar(
-          title: Text(
-            'Example title',
-            style: Theme.of(context) //
-                .primaryTextTheme
-                .headline4,
-          ),
+    // Scaffold は、主要な材料コンポーネントのレイアウトです。
+    return Scaffold(
+      appBar: AppBar(
+        leading: const IconButton(
+          icon: Icon(Icons.menu),
+          tooltip: 'Navigation menu',
+          onPressed: null,
         ),
-        const Expanded(
-          child: Center(child: Text("Hello, world!")),
-        ),
-      ],
-    ));
-  }
-}
-
-class MyAppBar extends StatelessWidget {
-  const MyAppBar({required this.title, Key? key}) : super(key: key);
-
-  // Widgetのサブクラスのフィールドは、常に "final "とマークされます。
-  final Widget title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 56.0,
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      decoration: BoxDecoration(color: Colors.blue[500]),
-      // Rowは横長の直線的なレイアウトです。
-      child: Row(
-        children: [
-          const IconButton(
-            icon: Icon(Icons.menu),
-            tooltip: 'Navigation menu',
-            onPressed: null,
-          ),
-          // Expanded は、利用可能なスペースを埋めるために child を拡張する。
-          Expanded(child: title),
-          const IconButton(
+        title: const Text('Example title'),
+        actions: const [
+          IconButton(
             icon: Icon(Icons.search),
             tooltip: 'Search',
             onPressed: null,
-          )
+          ),
         ],
+      ),
+      body: const Center(
+        child: Text('Hello world!'),
+      ),
+      floatingActionButton: const FloatingActionButton(
+        tooltip: 'Add',
+        child: Icon(Icons.add),
+        onPressed: null,
       ),
     );
   }
 }
-
 
 // class MyApp extends StatelessWidget {
 //   const MyApp({Key? key}) : super(key: key);
