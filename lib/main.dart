@@ -5,33 +5,54 @@ void main() {
   runApp(const MaterialApp(
     home: Scaffold(
       body: Center(
-        child: MyButton(),
+        child: Counter(),
       ),
     ),
   ));
 }
 
-class MyButton extends StatelessWidget {
-  const MyButton({Key? key}) : super(key: key);
+class Counter extends StatefulWidget {
+  // このクラスは、State の設定です。
+  // 親から提供され、ステートのビルドメソッドで使用される値 (この場合は何もない) を保持します。
+  // Widgetのサブクラスのフィールドは、常に final とマークされます。
+  const Counter({Key? key}) : super(key: key);
+
+  @override
+  _CounterState createState() => _CounterState();
+}
+
+class _CounterState extends State<Counter> {
+  int _counter = 0;
+
+  void _increment() {
+    setState(() {
+      // このsetStateの呼び出しは、
+      // FlutterフレームワークにこのStateで何かが変更されたことを伝え、
+      // 以下のbuildメソッドを再実行させ、
+      // ディスプレイに更新された値を反映させることができるようにします。
+      // もしsetState()を呼ばずに_counterを変更した場合、
+      // buildメソッドは再度呼ばれないので、何も起こらないように見えます。
+      _counter++;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        print('MyButton was tapped');
-      },
-      child: Container(
-        height: 50,
-        padding: const EdgeInsets.all(8.0),
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5.0),
-          color: Colors.lightGreen[500],
+    // このメソッドは、例えば上記の_incrementメソッドで行われるように、
+    // setStateが呼ばれるたびに再実行されます。
+    // Flutter フレームワークは、ビルドメソッドの再実行を高速化するように最適化されています。
+    // そのため、ウィジェットのインスタンスを個別に変更するのではなく、
+    // 更新が必要なものを再構築すればよいのです。
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ElevatedButton(
+          onPressed: _increment,
+          child: const Text('Increment'),
         ),
-        child: const Center(
-          child: Text('Engage'),
-        ),
-      ),
+        const SizedBox(width: 16),
+        Text('Count: $_counter'),
+      ],
     );
   }
 }
