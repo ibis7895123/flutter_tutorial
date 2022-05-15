@@ -50,14 +50,14 @@ Widget titleSection = Container(
               'Kandersteg, Switzerland',
               style: TextStyle(color: Colors.grey[500]),
             ),
-            Icon(
-              Icons.star,
-              color: Colors.red[500],
-            ),
-            const Text('41'),
           ],
         ),
       ),
+      Icon(
+        Icons.star,
+        color: Colors.red[500],
+      ),
+      const Text('41'),
     ],
   ),
 );
