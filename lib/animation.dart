@@ -21,7 +21,7 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
       duration: const Duration(seconds: 2),
       vsync: this,
     );
-    animation = Tween<double>(begin: 0, end: 300).animate(controller)
+    animation = CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           controller.reverse();
@@ -58,16 +58,22 @@ class GrowTransition extends StatelessWidget {
   final Widget child;
   final Animation<double> animation;
 
+  static final _opacityTween = Tween<double>(begin: 0.1, end: 1);
+  static final _sizeTween = Tween<double>(begin: 0, end: 300);
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: AnimatedBuilder(
         animation: animation,
         builder: (context, child) {
-          return SizedBox(
-            height: animation.value,
-            width: animation.value,
-            child: child,
+          return Opacity(
+            opacity: _opacityTween.evaluate(animation),
+            child: SizedBox(
+              height: _sizeTween.evaluate(animation),
+              width: _sizeTween.evaluate(animation),
+              child: child,
+            ),
           );
         },
         child: child,
